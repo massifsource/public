@@ -1,0 +1,83 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.massifsource</groupId>
+	<artifactId>massifsource</artifactId>
+	<version>trunk-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>MassifSource</name>
+	<description>MassifSource root project</description>
+
+	<distributionManagement>
+		<repository>
+			<id>build-server</id>
+			<name>build-server-releases</name>
+			<url>http://build-server:8081/artifactory/ext-release-local</url>
+		</repository>
+		<snapshotRepository>
+			<id>build-server</id>
+			<name>build-server-snapshots</name>
+			<url>http://build-server:8081/artifactory/ext-snapshot-local</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<repositories>
+		<repository>
+			<id>central</id>
+			<url> http://build-server:8081/artifactory/libs-release </url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>snapshots</id>
+			<url> http://build-server:8081/artifactory/libs-snapshot </url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>central</id>
+			<url> http://build-server:8081/artifactory/plugins-release </url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+		<pluginRepository>
+			<id>snapshots</id>
+			<url> http://build-server:8081/artifactory/plugins-snapshot </url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<modules>
+		<module>massifsync</module>
+	</modules>
+
+	<properties>
+		<spring.version>3.2.2.RELEASE</spring.version>
+	</properties>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-web</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>
