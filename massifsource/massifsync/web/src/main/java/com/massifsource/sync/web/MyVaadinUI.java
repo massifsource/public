@@ -1,4 +1,4 @@
-package com.massifsource.sync;
+package com.massifsource.sync.web;
 
 import org.springframework.stereotype.Component;
 
@@ -12,12 +12,13 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * The Application's "main" class
  */
-@SuppressWarnings("serial")
 @Component
 public class MyVaadinUI extends UI
 {
 
-    @Override
+	private static final long serialVersionUID = 2582897831380309074L;
+
+	@Override
     protected void init(VaadinRequest request) {
         final VerticalLayout layout = new VerticalLayout();
         layout.setMargin(true);

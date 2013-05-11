@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+							http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+                           	http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+
+	<jpa:repositories base-package="com.massifsource.sync.db.h2.repository"
+		entity-manager-factory-ref="embeddedH2EntityManagerFactory"
+		transaction-manager-ref="h2TransactionManager" />
+	<jpa:repositories base-package="com.massifsource.sync.db.hsql.repository"
+		entity-manager-factory-ref="embeddedHsqlEntityManagerFactory"
+		transaction-manager-ref="hsqlTransactionManager" />
+
+	<bean id="hsqlTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="embeddedHsqlEntityManagerFactory" />
+	</bean>
+
+	<bean id="h2TransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="embeddedH2EntityManagerFactory" />
+	</bean>
+
+	<bean id="h2DataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="org.h2.Driver" />
+		<property name="url" value="jdbc:h2:~/mydb" />
+	</bean>
+
+	<jdbc:initialize-database data-source="h2DataSource">
+		<jdbc:script location="classpath:/sql/schema.sql"
+			encoding="UTF-8" />
+		<jdbc:script location="classpath:/sql/test-data.sql"
+			encoding="UTF-8" />
+	</jdbc:initialize-database>
+
+	<jdbc:embedded-database id="embeddedHsqlDataSource"
+		type="HSQL">
+		<!-- <jdbc:script location="classpath:/schema.sql" encoding="UTF-8" /> -->
+	</jdbc:embedded-database>
+
+	<bean id="embeddedHsqlEntityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="embeddedHsqlDataSource" />
+		<property name="persistenceUnitName" value="hsql" />
+		<property name="packagesToScan" value="com.massifsource.sync.db.hsql.model" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="database" value="HSQL" />
+				<property name="showSql" value="true" />
+				<property name="generateDdl" value="true" />
+				<property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="embeddedH2EntityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="h2DataSource" />
+		<property name="persistenceUnitName" value="h2" />
+		<property name="packagesToScan" value="com.massifsource.sync.db.h2.model" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="database" value="H2" />
+				<property name="showSql" value="true" />
+				<property name="generateDdl" value="true" />
+				<property name="databasePlatform" value="org.hibernate.dialect.H2Dialect" />
+			</bean>
+		</property>
+	</bean>
+</beans>
