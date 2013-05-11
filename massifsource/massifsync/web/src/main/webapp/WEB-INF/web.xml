@@ -8,7 +8,10 @@
     </context-param>
     <context-param>
       <param-name>contextConfigLocation</param-name>
-      <param-value>classpath:/spring/web-beans.xml</param-value>
+      <param-value>
+      	classpath:/spring/web-beans.xml
+      	classpath:/spring/db-beans.xml					
+      </param-value>
   </context-param>
   
     <!-- Spring context loader -->

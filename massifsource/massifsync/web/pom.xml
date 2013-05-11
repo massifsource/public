@@ -79,6 +79,11 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.massifsource.sync</groupId>
+			<artifactId>db</artifactId>
+			<version>trunk-SNAPSHOT</version>
+		</dependency>
 
 	</dependencies>
 
@@ -87,10 +92,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-				</configuration>
 			</plugin>
 			<!-- As we are doing "inplace" GWT compilation, ensure the widgetset -->
 			<!-- directory is cleaned properly -->
@@ -101,6 +102,7 @@
 					<filesets>
 						<fileset>
 							<directory>src/main/webapp/VAADIN/widgetsets</directory>
+							<directory>src/main/webapp/VAADIN/gwt-unitCache</directory>
 						</fileset>
 					</filesets>
 				</configuration>
@@ -138,6 +140,7 @@
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
+				<version>7.6.8.v20121106</version>
 			</plugin>
 		</plugins>
 		<pluginManagement>
@@ -173,5 +176,6 @@
 			</plugins>
 		</pluginManagement>
 
+		<finalName>massifsync-web</finalName>
 	</build>
 </project>
