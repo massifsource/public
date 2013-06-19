@@ -32,7 +32,7 @@
         <init-param>
             <description>Application widgetset</description>
             <param-name>widgetset</param-name>
-            <param-value>com.massifsource.sync.AppWidgetSet</param-value>
+            <param-value>com.massifsource.sync.web.AppWidgetSet</param-value>
         </init-param>
     </servlet>
    
