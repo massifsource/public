@@ -8,61 +8,41 @@
 	<name>MassifSource</name>
 	<description>MassifSource root project</description>
 
-	<distributionManagement>
-		<repository>
-			<id>build-server</id>
-			<name>build-server-releases</name>
-			<url>http://build-server:8081/artifactory/ext-release-local</url>
-		</repository>
-		<snapshotRepository>
-			<id>build-server</id>
-			<name>build-server-snapshots</name>
-			<url>http://build-server:8081/artifactory/ext-snapshot-local</url>
-		</snapshotRepository>
-	</distributionManagement>
+	<!-- <distributionManagement> <repository> <id>build-server</id> <name>build-server-releases</name> 
+		<url>http://build-server:8081/artifactory/ext-release-local</url> </repository> 
+		<snapshotRepository> <id>build-server</id> <name>build-server-snapshots</name> 
+		<url>http://build-server:8081/artifactory/ext-snapshot-local</url> </snapshotRepository> 
+		</distributionManagement> -->
 
 	<repositories>
 		<repository>
-			<id>central</id>
-			<url> http://build-server:8081/artifactory/libs-release </url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
+			<id>ext-release-local</id>
+			<url>http://repo.springsource.org/simple/ext-release-local/</url>
 		</repository>
-		<repository>
-			<id>snapshots</id>
-			<url> http://build-server:8081/artifactory/libs-snapshot </url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-		</repository>
+		<!-- <repository> <id>central</id> <url> http://build-server:8081/artifactory/libs-release 
+			</url> <snapshots> <enabled>false</enabled> </snapshots> </repository> <repository> 
+			<id>snapshots</id> <url> http://build-server:8081/artifactory/libs-snapshot 
+			</url> <releases> <enabled>false</enabled> </releases> </repository> -->
+
 	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>central</id>
-			<url> http://build-server:8081/artifactory/plugins-release </url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</pluginRepository>
-		<pluginRepository>
-			<id>snapshots</id>
-			<url> http://build-server:8081/artifactory/plugins-snapshot </url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-		</pluginRepository>
-	</pluginRepositories>
+	<!-- <pluginRepositories> <pluginRepository> <id>central</id> <url> http://build-server:8081/artifactory/plugins-release 
+		</url> <snapshots> <enabled>false</enabled> </snapshots> </pluginRepository> 
+		<pluginRepository> <id>snapshots</id> <url> http://build-server:8081/artifactory/plugins-snapshot 
+		</url> <releases> <enabled>false</enabled> </releases> </pluginRepository> 
+		</pluginRepositories> -->
 
 	<modules>
 		<module>massifsync</module>
+		<module>massifpurge</module>
 	</modules>
 
 	<properties>
 		<spring.version>3.2.2.RELEASE</spring.version>
+		<spring.shell.version>1.0.0.RELEASE</spring.shell.version>
 		<slf4j.version>1.7.5</slf4j.version>
 		<logback.version>1.0.12</logback.version>
 		<junit.version>4.11</junit.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -92,10 +72,15 @@
 				<version>${spring.version}</version>
 			</dependency>
 			<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-aop</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-aop</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.shell</groupId>
+				<artifactId>spring-shell</artifactId>
+				<version>${spring.shell.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-test</artifactId>
@@ -126,7 +111,22 @@
 				<artifactId>junit</artifactId>
 				<version>${junit.version}</version>
 			</dependency>
-
 		</dependencies>
 	</dependencyManagement>
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<version>2.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>2.3.1</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
 </project>
